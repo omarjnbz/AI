@@ -1,0 +1,191 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+}
+
+/* 1. Hero Container - Locks everything inside */
+.hero-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(180deg, #0284c7 0%, #38bdf8 40%, #7dd3fc 70%, #bae6fd 100%);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 2. Navbar Styling */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  color: white;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.title {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.contact-btn {
+  background: white;
+  color: black;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 3. The Giant Text (Layer 1 - Background text) */
+.text-container {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+}
+
+.hero-text {
+  font-size: 22vw;
+  font-weight: 900;
+  color: white;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-align: center;
+  user-select: none;
+}
+
+/* 4. The Foreground Subject (Layer 2 - In front of text) */
+.hero-subject {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 75vh;
+  object-fit: cover;
+  z-index: 2;
+  pointer-events: none;
+  /* Mask to create a natural fade at the bottom and soft edges */
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 95%);
+  mask-image: linear-gradient(to bottom, black 50%, transparent 95%);
+}
+
+/* 5. The Bottom Fade to White (Layer 3 - Blends subject into page) */
+.bottom-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 35vh;
+  background: linear-gradient(to bottom, transparent 0%, #ffffff 80%, #ffffff 100%);
+  z-index: 3;
+}
+
+/* Crop marks around the text */
+.crop-mark {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1.5rem 1.5rem;
+  }
+
+  .name {
+    font-size: 1rem;
+  }
+
+  .title {
+    font-size: 0.75rem;
+  }
+
+  .hero-text {
+    font-size: 28vw;
+  }
+
+  .hero-subject {
+    height: 60vh;
+    bottom: 15%;
+  }
+
+  .contact-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .logo-icon {
+    display: none;
+  }
+
+  .hero-text {
+    font-size: 32vw;
+  }
+
+  .hero-subject {
+    height: 50vh;
+    bottom: 18%;
+  }
+}
