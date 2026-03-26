@@ -78,6 +78,7 @@ body {
   letter-spacing: -0.04em;
   text-align: center;
   user-select: none;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3), 0 4px 40px rgba(0, 0, 0, 0.15);
 }
 
 /* 4. The Foreground Subject (Layer 2 - In front of text) */
@@ -95,7 +96,36 @@ body {
   mask-image: linear-gradient(to bottom, black 50%, transparent 95%);
 }
 
-/* 5. The Bottom Fade to White (Layer 3 - Blends subject into page) */
+/* 5. CTA Button */
+.cta-container {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.cta-btn {
+  background: white;
+  color: #0284c7;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* 6. The Bottom Fade to White (Layer 3 - Blends subject into page) */
 .bottom-gradient {
   position: absolute;
   bottom: 0;
@@ -168,6 +198,11 @@ body {
   .contact-btn {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
+  }
+
+  .cta-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
   }
 }
 
