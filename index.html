@@ -49,8 +49,16 @@
   <div class="section-header">
     <h2 class="section-title">Non Site-to-Site Connections</h2>
     <p class="section-subtitle">Agent operator dashboard — real-time server health, connectivity, and activation logs</p>
+    <div class="heartbeat-bar">
+      <span class="heartbeat-dot" id="heartbeat-dot"></span>
+      <span class="heartbeat-label" id="heartbeat-label">Connecting...</span>
+      <span class="heartbeat-timer">Next ping in: <span id="heartbeat-countdown">--</span>s</span>
+    </div>
     <div class="last-updated">Last updated: <span id="last-updated-time">--</span></div>
   </div>
+
+  <!-- Alert Banner -->
+  <div class="alerts-container" id="alerts-container"></div>
 
   <div class="panels-grid">
 
@@ -146,7 +154,7 @@
 
   <div class="fetch-controls">
     <button class="refresh-btn" id="refresh-btn">Refresh Data</button>
-    <span class="fetch-note">Data will be fetched from server once endpoint is configured</span>
+    <span class="fetch-note" id="fetch-note">Heartbeat active — auto-refreshing every 30s</span>
   </div>
 </section>
 

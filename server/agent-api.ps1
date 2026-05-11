@@ -104,6 +104,13 @@ function Get-ConnectivityData {
     }
 }
 
+function Get-HeartbeatData {
+    return @{
+        alive     = $true
+        timestamp = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ss")
+    }
+}
+
 function Get-LogsData {
     $recentEvents = Get-EventLog -LogName System -Newest 10 -ErrorAction SilentlyContinue
 
@@ -156,6 +163,11 @@ try {
 
         # Route requests
         switch ($path) {
+            "/api/heartbeat" {
+                $data = Get-HeartbeatData
+                Send-Json $context $data
+                Write-Host "  -> 200 heartbeat"
+            }
             "/api/health" {
                 $data = Get-HealthData
                 Send-Json $context $data
@@ -172,7 +184,7 @@ try {
                 Write-Host "  -> 200 logs"
             }
             default {
-                Send-Json $context @{ error = "Not found"; endpoints = @("/api/health", "/api/connectivity", "/api/logs") } 404
+                Send-Json $context @{ error = "Not found"; endpoints = @("/api/heartbeat", "/api/health", "/api/connectivity", "/api/logs") } 404
                 Write-Host "  -> 404"
             }
         }
