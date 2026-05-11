@@ -16,6 +16,8 @@ var heartbeatCountdown = HEARTBEAT_INTERVAL;
 var heartbeatTimerId = null;
 var countdownTimerId = null;
 var dataRefreshTimerId = null;
+var lastUpdatedTimerId = null;
+var lastDataFetchTime = null;
 var previousConnections = null;
 var alerts = [];
 var alertIdCounter = 0;
@@ -304,7 +306,23 @@ async function loadDashboard() {
   checkConnectivityAlerts(connectivity);
   checkLogAlerts(logs);
 
-  setTextContent("last-updated", new Date().toLocaleTimeString());
+  lastDataFetchTime = Date.now();
+  updateLastUpdatedText();
+}
+
+// === Live "Updated X ago" ticker ===
+function updateLastUpdatedText() {
+  if (!lastDataFetchTime) return;
+  var seconds = Math.floor((Date.now() - lastDataFetchTime) / 1000);
+  var text;
+  if (seconds < 5) text = "just now";
+  else if (seconds < 60) text = seconds + "s ago";
+  else {
+    var mins = Math.floor(seconds / 60);
+    var secs = seconds % 60;
+    text = mins + "m " + secs + "s ago";
+  }
+  setTextContent("last-updated-time", text);
 }
 
 // === Start Everything ===
@@ -327,6 +345,8 @@ function startDataRefresh() {
 document.addEventListener("DOMContentLoaded", function () {
   startHeartbeat();
   startDataRefresh();
+
+  lastUpdatedTimerId = setInterval(updateLastUpdatedText, 1000);
 
   var refreshBtn = document.getElementById("refresh-btn");
   if (refreshBtn) {
