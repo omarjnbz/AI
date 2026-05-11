@@ -3,12 +3,12 @@
 const API_BASE = null; // e.g. "http://192.168.1.100:8080/api"
 const API_TOKEN = null; // e.g. "xK9mQ2vL8pN4wR7tY1bF6hJ3" (must match server)
 
-// === Heartbeat Settings ===
-const HEARTBEAT_INTERVAL = 15;  // seconds — lightweight ping to check if server is alive
-const DATA_REFRESH_INTERVAL = 30; // seconds — full data pull for all panels
-const CPU_THRESHOLD = 90;         // alert if CPU exceeds this %
-const MEMORY_THRESHOLD = 90;      // alert if memory exceeds this %
-const MAX_MISSED_HEARTBEATS = 3;  // mark offline after this many consecutive failures
+// === Heartbeat Settings (synced to Nagios 5-min check cycle) ===
+const HEARTBEAT_INTERVAL = 300;   // 5 minutes — matches Nagios refresh rate
+const DATA_REFRESH_INTERVAL = 300; // 5 minutes — pull new data each Nagios cycle
+const CPU_THRESHOLD = 90;
+const MEMORY_THRESHOLD = 90;
+const MAX_MISSED_HEARTBEATS = 3;  // mark offline after 15 min of no response
 
 // === State ===
 var missedHeartbeats = 0;
