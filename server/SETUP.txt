@@ -1,0 +1,91 @@
+================================================================
+  SERVER SETUP — Non Site-to-Site Agent API
+================================================================
+
+WHAT THIS DOES:
+  A read-only PowerShell script that collects server health,
+  connection counts, and system logs — and serves them as JSON
+  over HTTP so the dashboard website can display them.
+
+  It does NOT modify, write, or delete anything on the server.
+
+REQUIREMENTS:
+  - Windows Server 2016 or newer
+  - PowerShell 5.1+ (pre-installed on Windows Server)
+  - Administrator access (for initial setup only)
+
+================================================================
+STEP 1: Set your token
+================================================================
+
+Open agent-api.ps1 and change this line:
+
+  $BearerToken = "CHANGE-ME-TO-A-SECURE-TOKEN"
+
+Replace with a strong random string, e.g.:
+  $BearerToken = "xK9mQ2vL8pN4wR7tY1bF6hJ3"
+
+This same token must be set in the dashboard website.
+
+================================================================
+STEP 2: Allow the port (one-time, run as Admin)
+================================================================
+
+Open PowerShell as Administrator and run:
+
+  netsh http add urlacl url=http://+:8080/ user=YOURDOMAIN\YOURUSERNAME
+
+And allow it through the firewall:
+
+  New-NetFirewallRule -DisplayName "Agent API" -Direction Inbound -Port 8080 -Protocol TCP -Action Allow
+
+================================================================
+STEP 3: Run the script
+================================================================
+
+Open PowerShell (can be normal user after Step 2) and run:
+
+  cd C:\path\to\server
+  .\agent-api.ps1
+
+You should see:
+  ==========================================
+   Agent API running on port 8080
+   Waiting for requests...
+  ==========================================
+
+================================================================
+STEP 4: Test it
+================================================================
+
+From any browser or terminal on the same network:
+
+  curl -H "Authorization: Bearer xK9mQ2vL8pN4wR7tY1bF6hJ3" http://SERVER-IP:8080/api/health
+
+You should get JSON back with CPU, memory, uptime, etc.
+
+Without the token, you get: {"error": "Unauthorized"}
+
+================================================================
+STEP 5: Run as a background service (optional)
+================================================================
+
+To keep it running after you log out, use Task Scheduler:
+
+  1. Open Task Scheduler
+  2. Create Basic Task -> Name: "Agent API"
+  3. Trigger: "At startup"
+  4. Action: Start a program
+     Program: powershell.exe
+     Arguments: -ExecutionPolicy Bypass -File "C:\path\to\server\agent-api.ps1"
+  5. Check "Run whether user is logged on or not"
+
+================================================================
+SECURITY NOTES
+================================================================
+
+- The script is READ-ONLY. It uses Get-CimInstance, Get-NetTCPConnection,
+  Get-EventLog, and Test-Connection. None of these modify the system.
+- Token auth prevents unauthorized access.
+- CORS headers allow the dashboard website to connect.
+- For production: consider adding HTTPS with an SSL certificate.

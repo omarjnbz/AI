@@ -1,6 +1,7 @@
 // === Configuration ===
-// Replace with your actual server endpoint when ready
+// Replace with your actual server endpoint and token when ready
 const API_BASE = null; // e.g. "http://192.168.1.100:8080/api"
+const API_TOKEN = null; // e.g. "xK9mQ2vL8pN4wR7tY1bF6hJ3" (must match server)
 
 // === Mock Data (used when API_BASE is null) ===
 function getMockHealthData() {
@@ -44,7 +45,10 @@ async function fetchData(endpoint, mockFn) {
     return mockFn();
   }
   try {
-    const res = await fetch(`${API_BASE}/${endpoint}`);
+    const headers = {};
+    if (API_TOKEN) headers["Authorization"] = "Bearer " + API_TOKEN;
+    const res = await fetch(`${API_BASE}/${endpoint}`, { headers: headers });
+    if (res.status === 401) throw new Error("Unauthorized — check your API token");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return await res.json();
   } catch (err) {
