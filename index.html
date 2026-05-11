@@ -44,5 +44,112 @@
   <div class="bottom-gradient"></div>
 </section>
 
+<!-- Non Site-to-Site Connections Section -->
+<section class="connections-section" id="connections">
+  <div class="section-header">
+    <h2 class="section-title">Non Site-to-Site Connections</h2>
+    <p class="section-subtitle">Agent operator dashboard — real-time server health, connectivity, and activation logs</p>
+    <div class="last-updated">Last updated: <span id="last-updated-time">--</span></div>
+  </div>
+
+  <div class="panels-grid">
+
+    <!-- Panel 1: Health Check -->
+    <div class="panel" id="panel-health">
+      <div class="panel-header">
+        <span class="panel-icon">&#9673;</span>
+        <h3>Health Check</h3>
+        <span class="status-badge" id="health-status">--</span>
+      </div>
+      <div class="panel-body">
+        <div class="metric-row">
+          <span class="metric-label">Server Status</span>
+          <span class="metric-value" id="server-status">--</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Uptime</span>
+          <span class="metric-value" id="uptime">--</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">CPU Usage</span>
+          <div class="progress-bar"><div class="progress-fill" id="cpu-bar"></div></div>
+          <span class="metric-value" id="cpu-usage">--</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Memory Usage</span>
+          <div class="progress-bar"><div class="progress-fill" id="mem-bar"></div></div>
+          <span class="metric-value" id="mem-usage">--</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Disk I/O</span>
+          <span class="metric-value" id="disk-io">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Connectivity & Count -->
+    <div class="panel" id="panel-connectivity">
+      <div class="panel-header">
+        <span class="panel-icon">&#8644;</span>
+        <h3>Connectivity &amp; Count</h3>
+        <span class="status-badge" id="conn-status">--</span>
+      </div>
+      <div class="panel-body">
+        <div class="metric-row">
+          <span class="metric-label">Active Connections</span>
+          <span class="metric-value big-number" id="active-conn">--</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Total Agents</span>
+          <span class="metric-value big-number" id="total-agents">--</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Avg Latency</span>
+          <span class="metric-value" id="avg-latency">--</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Packet Loss</span>
+          <span class="metric-value" id="packet-loss">--</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Connection Type</span>
+          <span class="metric-value tag" id="conn-type">--</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 3: Call Activation & Logs -->
+    <div class="panel panel-wide" id="panel-logs">
+      <div class="panel-header">
+        <span class="panel-icon">&#9998;</span>
+        <h3>Call Activation &amp; Vendor Logs</h3>
+        <span class="status-badge" id="logs-status">--</span>
+      </div>
+      <div class="panel-body">
+        <table class="logs-table">
+          <thead>
+            <tr>
+              <th>Timestamp</th>
+              <th>Vendor</th>
+              <th>Action</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="logs-tbody">
+            <tr><td colspan="4" class="loading-text">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="fetch-controls">
+    <button class="refresh-btn" id="refresh-btn">Refresh Data</button>
+    <span class="fetch-note">Data will be fetched from server once endpoint is configured</span>
+  </div>
+</section>
+
+<script src="dashboard.js"></script>
 </body>
 </html>
